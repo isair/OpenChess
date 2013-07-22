@@ -1,0 +1,13 @@
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+enthumbs.db
+Thumbs.db
+*.apk
+*.ap_
+*.class
+*.dex
+bin/
+gen/
