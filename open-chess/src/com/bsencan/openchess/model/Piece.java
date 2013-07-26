@@ -13,6 +13,44 @@
 
 package com.bsencan.openchess.model;
 
-public class Piece {
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.utils.Array;
+import com.bsencan.openchess.Assets;
+import com.bsencan.openchess.OpenChess;
 
+/**
+ * TODO: Javadocs. Movements methods. Etc.
+ * 
+ * @author Baris Sencan
+ */
+public class Piece extends Actor {
+	
+	public int x;
+	public int y;
+	public boolean isWhite;
+	
+	/**
+	 * An array that contains valid moves for the chess piece.
+	 */
+	protected Array<Vector2> validMoves = new Array<Vector2>();
+	
+	private TextureRegion textureRegion;
+	
+	public Piece(int x, int y, boolean isWhite, String regionName) {
+		this.x = x;
+		this.y = y;
+		this.isWhite = isWhite;
+		textureRegion = Assets.gameAtlas.findRegion(regionName);
+	}
+	
+	@Override
+	public void draw(SpriteBatch batch, float parentAlpha) {
+		int m = OpenChess.PSIZE;
+		
+		super.draw(batch, parentAlpha);
+		batch.draw(textureRegion, x * m, y * m, OpenChess.PSIZE, OpenChess.PSIZE);
+	}
 }

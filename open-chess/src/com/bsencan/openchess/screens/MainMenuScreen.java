@@ -13,10 +13,10 @@
 
 package com.bsencan.openchess.screens;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.bsencan.openchess.Assets;
+import com.bsencan.openchess.OpenChess;
 import com.bsencan.openchess.view.MainMenuRenderer;
 
 /**
@@ -26,25 +26,14 @@ import com.bsencan.openchess.view.MainMenuRenderer;
  */
 public class MainMenuScreen implements Screen {
 	
-	private Game game;
-	
 	private MainMenuRenderer renderer;
-	
-	/**
-	 * Screen constructor.
-	 * 
-	 * @param game The parent {@link Game} instance.
-	 */
-	public MainMenuScreen(Game game) {
-		this.game = game;
-	}
 
 	@Override
 	public void render(float delta) {
 		renderer.render(delta);
 		
 		if (Gdx.input.justTouched()) {
-			game.setScreen(new GameScreen(game));
+			OpenChess.game.setScreen(new GameScreen());
 		}
 	}
 

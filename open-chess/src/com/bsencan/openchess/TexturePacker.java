@@ -31,8 +31,8 @@ public class TexturePacker {
 		String destination = "../open-chess-android/assets/atlases";
 		String atlasName = "open-chess-atlas";
 		
-		settings.maxWidth = 512;
-		settings.maxHeight = 512;
+		settings.maxWidth = 1024;
+		settings.maxHeight = 1024;
 		TexturePacker2.process(settings, source, destination, atlasName);
 	}
 

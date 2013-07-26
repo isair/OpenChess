@@ -8,8 +8,8 @@ public class Main {
 		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
 		cfg.title = "Open Chess";
 		cfg.useGL20 = false;
-		cfg.width = 960;
-		cfg.height = 540;
+		cfg.width = 540;
+		cfg.height = 960;
 		
 		new LwjglApplication(new OpenChess(), cfg);
 	}

@@ -13,30 +13,21 @@
 
 package com.bsencan.openchess.screens;
 
-import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.input.GestureDetector.GestureListener;
-import com.badlogic.gdx.math.Vector2;
+import com.bsencan.openchess.Assets;
+import com.bsencan.openchess.model.Board;
 import com.bsencan.openchess.view.GameRenderer;
 
 /**
+ * Main game screen. Creates a new chess board and a game renderer, then tells
+ * the renderer to render that board.
  * 
  * @author Baris Sencan
  */
-public class GameScreen implements Screen, GestureListener {
-	
-	private Game game;
+public class GameScreen implements Screen {
 	
 	private GameRenderer renderer;
-	
-	/**
-	 * Screen constructor.
-	 * 
-	 * @param game The parent {@link Game} instance.
-	 */
-	public GameScreen(Game game) {
-		this.game = game;
-	}
 
 	@Override
 	public void render(float delta) {
@@ -50,70 +41,24 @@ public class GameScreen implements Screen, GestureListener {
 
 	@Override
 	public void show() {
-		renderer = new GameRenderer();
+		Assets.loadGame();
+		renderer = new GameRenderer(new Board());
+		renderer.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 	}
 
 	@Override
 	public void hide() {
 		renderer.dispose();
+		Assets.disposeGame();
 	}
 
 	@Override
-	public void pause() {
-		// TODO Auto-generated method stub
-		
-	}
+	public void pause() {}
 
 	@Override
-	public void resume() {
-		// TODO Auto-generated method stub
-		
-	}
+	public void resume() {}
 
 	@Override
 	public void dispose() {} // Never called automatically.
-
-	@Override
-	public boolean touchDown(float x, float y, int pointer, int button) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean tap(float x, float y, int count, int button) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean longPress(float x, float y) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean fling(float velocityX, float velocityY, int button) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean pan(float x, float y, float deltaX, float deltaY) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean zoom(float initialDistance, float distance) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean pinch(Vector2 initialPointer1, Vector2 initialPointer2,
-			Vector2 pointer1, Vector2 pointer2) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 
 }

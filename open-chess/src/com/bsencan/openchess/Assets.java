@@ -15,6 +15,7 @@ package com.bsencan.openchess;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 /**
@@ -27,6 +28,7 @@ public class Assets {
 	
 	public static Skin skin;
 	public static Music menuMusic;
+	public static TextureAtlas gameAtlas;
 	
 	/**
 	 * Loads all assets required by {@link MainMenuScreen}.
@@ -42,5 +44,19 @@ public class Assets {
 	public static void disposeMainMenu() {
 		skin.dispose();
 		menuMusic.dispose();
+	}
+	
+	/**
+	 * Loads all assets required by {@link GameScreen}.
+	 */
+	public static void loadGame() {
+		gameAtlas = new TextureAtlas(Gdx.files.internal("atlases/open-chess-atlas.atlas"));
+	}
+	
+	/**
+	 * Disposes of all assets required by {@link GameScreen}.
+	 */
+	public static void disposeGame() {
+		gameAtlas.dispose();
 	}
 }

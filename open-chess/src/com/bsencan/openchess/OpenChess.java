@@ -24,6 +24,11 @@ import com.bsencan.openchess.screens.MainMenuScreen;
 public class OpenChess extends Game {
 	
 	/**
+	 * Provides global access to the active <code>Game</code> instance.
+	 */
+	public static Game game;
+	
+	/**
 	 * Unit width of the screen. Everything in this game is rendered in game
 	 * units instead of pixels for scalability. This variable determines the
 	 * width of the screen in terms of game units.
@@ -37,7 +42,8 @@ public class OpenChess extends Game {
 
 	@Override
 	public void create() {
-		setScreen(new MainMenuScreen(this));
+		game = this;
+		setScreen(new MainMenuScreen());
 	}
 
 }

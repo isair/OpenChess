@@ -11,13 +11,19 @@
 * governing permissions and limitations under the License.
 */
 
-package com.bsencan.openchess.controller;
+package com.bsencan.openchess.model.pieces;
+
+import com.bsencan.openchess.model.Piece;
 
 /**
- * TODO
+ * Represents a king chess piece.
  * 
  * @author Baris Sencan
  */
-public class GameController {
+public class King extends Piece {
+
+	public King(int x, int y, boolean isWhite) {
+		super(x, y, isWhite, isWhite ? "white-king" : "black-king");
+	}
 
 }

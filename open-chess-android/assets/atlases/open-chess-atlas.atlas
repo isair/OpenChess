@@ -12,77 +12,84 @@ black-bishop
   index: -1
 black-king
   rotate: false
-  xy: 1, 67
+  xy: 643, 775
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 black-knight
   rotate: false
-  xy: 67, 133
+  xy: 1, 67
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 black-pawn
   rotate: false
-  xy: 1, 1
+  xy: 67, 133
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 black-queen
   rotate: false
-  xy: 67, 67
+  xy: 643, 709
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 black-rook
   rotate: false
-  xy: 133, 133
+  xy: 709, 775
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
+board
+  rotate: false
+  xy: 1, 199
+  size: 640, 640
+  orig: 640, 640
+  offset: 0, 0
+  index: -1
 white-bishop
   rotate: false
-  xy: 67, 1
+  xy: 1, 1
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 white-king
   rotate: false
-  xy: 133, 67
+  xy: 67, 67
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 white-knight
   rotate: false
-  xy: 199, 133
+  xy: 133, 133
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 white-pawn
   rotate: false
-  xy: 133, 1
+  xy: 643, 643
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 white-queen
   rotate: false
-  xy: 199, 67
+  xy: 709, 709
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 white-rook
   rotate: false
-  xy: 265, 133
+  xy: 775, 775
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
