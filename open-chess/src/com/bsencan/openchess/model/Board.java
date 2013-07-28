@@ -34,7 +34,24 @@ public class Board extends Table {
 	public Piece selectedPiece;
 	public int round;
 
+	/**
+	 * <code>PieceType</code> enums are only used by <code>Board</code> itself
+	 * to ease the process of adding chess pieces to it.
+	 * 
+	 * @author Baris Sencan
+	 */
+	private enum PieceType {
+		Pawn, Rook, Knight, Bishop, Queen, King
+	}
+
+	/**
+	 * Pointers to tiles for easy access.
+	 */
 	private final Tile[][] tiles = new Tile[8][8];
+
+	/**
+	 * Pointers to pieces for easy access.
+	 */
 	private final Piece[][] pieces = new Piece[8][8];
 
 	/* -- Getters -- */
@@ -67,36 +84,91 @@ public class Board extends Table {
 			}
 		}
 
+		this.populate();
+	}
+
+	public void populate() {
 		/* Add pawns. */
 		for (int i = 0; i < 8; i++) {
-			this.addActor(new Pawn(i, 1, true));
-			this.addActor(new Pawn(i, 6, false));
+			this.addPiece(PieceType.Pawn, i, 1, true);
+			this.addPiece(PieceType.Pawn, i, 6, false);
 		}
 
 		/* Add rooks. */
-		this.addActor(new Rook(0, 0, true));
-		this.addActor(new Rook(7, 0, true));
-		this.addActor(new Rook(0, 7, false));
-		this.addActor(new Rook(7, 7, false));
+		this.addPiece(PieceType.Rook, 0, 0, true);
+		this.addPiece(PieceType.Rook, 7, 0, true);
+		this.addPiece(PieceType.Rook, 0, 7, false);
+		this.addPiece(PieceType.Rook, 7, 7, false);
 
 		/* Add knights. */
-		this.addActor(new Knight(1, 0, true));
-		this.addActor(new Knight(6, 0, true));
-		this.addActor(new Knight(1, 7, false));
-		this.addActor(new Knight(6, 7, false));
+		this.addPiece(PieceType.Knight, 1, 0, true);
+		this.addPiece(PieceType.Knight, 6, 0, true);
+		this.addPiece(PieceType.Knight, 1, 7, false);
+		this.addPiece(PieceType.Knight, 6, 7, false);
 
 		/* Add bishops. */
-		this.addActor(new Bishop(2, 0, true));
-		this.addActor(new Bishop(5, 0, true));
-		this.addActor(new Bishop(2, 7, false));
-		this.addActor(new Bishop(5, 7, false));
+		this.addPiece(PieceType.Bishop, 2, 0, true);
+		this.addPiece(PieceType.Bishop, 5, 0, true);
+		this.addPiece(PieceType.Bishop, 2, 7, false);
+		this.addPiece(PieceType.Bishop, 5, 7, false);
 
 		/* Add queens. */
-		this.addActor(new Queen(3, 0, true));
-		this.addActor(new Queen(3, 7, false));
+		this.addPiece(PieceType.Queen, 3, 0, true);
+		this.addPiece(PieceType.Queen, 3, 7, false);
 
 		/* Add kings. */
-		this.addActor(new King(4, 0, true));
-		this.addActor(new King(4, 7, false));
+		this.addPiece(PieceType.King, 4, 0, true);
+		this.addPiece(PieceType.King, 4, 7, false);
 	}
+
+	/**
+	 * Creates and places a chess piece on this board.
+	 * 
+	 * @param type
+	 *            Type of the chess piece to be created.
+	 * @param x
+	 *            Horizontal index of its tile.
+	 * @param y
+	 *            Vertical index of its tile.
+	 * @param isWhite
+	 *            Determines whether the chess piece is white or black.
+	 */
+	private void addPiece(PieceType type, int x, int y, boolean isWhite) {
+		Piece piece;
+
+		switch (type) {
+		default:
+		case Pawn:
+			piece = new Pawn(x, y, isWhite);
+			break;
+
+		case Rook:
+			piece = new Rook(x, y, isWhite);
+			break;
+
+		case Knight:
+			piece = new Knight(x, y, isWhite);
+			break;
+
+		case Bishop:
+			piece = new Bishop(x, y, isWhite);
+			break;
+
+		case Queen:
+			piece = new Queen(x, y, isWhite);
+			break;
+
+		case King:
+			piece = new King(x, y, isWhite);
+			break;
+		}
+		this.addActor(piece);
+		this.pieces[x][y] = piece;
+	}
+
+	public void relocatePiece(int xOld, int yOld, int x, int y) {
+		this.pieces[x][y] = this.pieces[xOld][yOld];
+		this.pieces[xOld][yOld] = null;
+	}
+
 }

@@ -65,9 +65,15 @@ public class BoardController extends ActorGestureListener {
 		}
 
 		if (this.board.getTileAt(x, y).isHighlighted) {
+			int xOld = (int) selectedPiece.getX() / OpenChess.PSIZE;
+			int yOld = (int) selectedPiece.getY() / OpenChess.PSIZE;
+
 			this.toggleMoveHighlightsForPiece(selectedPiece);
+
+			this.board.relocatePiece(xOld, yOld, x, y);
 			selectedPiece.setX(x * OpenChess.PSIZE);
 			selectedPiece.setY(y * OpenChess.PSIZE);
+
 			this.board.selectedPiece = null;
 			this.board.round++;
 		}
@@ -87,8 +93,9 @@ public class BoardController extends ActorGestureListener {
 		int y = (int) piece.getY() / OpenChess.PSIZE;
 
 		for (Move move : piece.validMoves) {
+			boolean isLooping = true;
 
-			for (int i = 1; true; i++) {
+			for (int i = 1; isLooping; i++) {
 				int hX = x + (move.xOffset * i); // Highlight x.
 				int hY = y
 						+ ((piece.isWhite ? move.yOffset : -move.yOffset) * i); // Highlight
@@ -97,15 +104,20 @@ public class BoardController extends ActorGestureListener {
 				if ((hX > -1) && (hX < 8) && (hY > -1) && (hY < 8)) {
 					Tile tile = this.board.getTileAt(hX, hY);
 
-					tile.isHighlighted = !tile.isHighlighted;
+					if (this.board.getPieceAt(hX, hY) != null) {
+						isLooping = false;
+					} else {
+						tile.isHighlighted = !tile.isHighlighted;
+					}
 				} else {
-					break;
+					isLooping = false;
 				}
 
 				if (!move.continuous) {
-					break;
+					isLooping = false;
 				}
 			}
 		}
 	}
+
 }

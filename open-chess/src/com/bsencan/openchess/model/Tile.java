@@ -32,7 +32,7 @@ public class Tile extends Actor {
 	private TextureRegion highlightedTextureRegion;
 
 	/**
-	 * Creates a TODO
+	 * Creates a board tile.
 	 * 
 	 * @param x
 	 *            Horizontal index of the tile.
@@ -69,4 +69,5 @@ public class Tile extends Actor {
 					this.getWidth(), this.getHeight());
 		}
 	}
+
 }
