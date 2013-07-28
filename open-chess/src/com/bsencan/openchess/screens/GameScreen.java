@@ -1,15 +1,15 @@
 /*
-* Copyright 2013 Baris Sencan (baris.sencan@me.com)
-*
-* Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the
-* License. You may obtain a copy of the License at
-*
-* http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS"
-* BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language
-* governing permissions and limitations under the License.
-*/
+ * Copyright 2013 Baris Sencan (baris.sencan@me.com)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the
+ * License. You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS"
+ * BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
 
 package com.bsencan.openchess.screens;
 
@@ -26,39 +26,43 @@ import com.bsencan.openchess.view.GameRenderer;
  * @author Baris Sencan
  */
 public class GameScreen implements Screen {
-	
+
 	private GameRenderer renderer;
 
 	@Override
 	public void render(float delta) {
-		renderer.render(delta);
+		this.renderer.render(delta);
 	}
 
 	@Override
 	public void resize(int width, int height) {
-		renderer.setSize(width, height);
+		this.renderer.setSize(width, height);
 	}
 
 	@Override
 	public void show() {
 		Assets.loadGame();
-		renderer = new GameRenderer(new Board());
-		renderer.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		this.renderer = new GameRenderer(new Board());
+		this.renderer
+				.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 	}
 
 	@Override
 	public void hide() {
-		renderer.dispose();
+		this.renderer.dispose();
 		Assets.disposeGame();
 	}
 
 	@Override
-	public void pause() {}
+	public void pause() {
+	}
 
 	@Override
-	public void resume() {}
+	public void resume() {
+	}
 
 	@Override
-	public void dispose() {} // Never called automatically.
+	public void dispose() {
+	} // Never called automatically.
 
 }
