@@ -35,16 +35,6 @@ public class Board extends Table {
 	public int round;
 
 	/**
-	 * <code>PieceType</code> enums are only used by <code>Board</code> itself
-	 * to ease the process of adding chess pieces to it.
-	 * 
-	 * @author Baris Sencan
-	 */
-	private enum PieceType {
-		Pawn, Rook, Knight, Bishop, Queen, King
-	}
-
-	/**
 	 * Pointers to tiles for easy access.
 	 */
 	private final Tile[][] tiles = new Tile[8][8];
@@ -87,6 +77,10 @@ public class Board extends Table {
 		this.populate();
 	}
 
+	/**
+	 * Populates the <code>Board</code> with chess pieces in order to prepare it
+	 * for a standard game of chess.
+	 */
 	public void populate() {
 		/* Add pawns. */
 		for (int i = 0; i < 8; i++) {
@@ -122,7 +116,7 @@ public class Board extends Table {
 	}
 
 	/**
-	 * Creates and places a chess piece on this board.
+	 * Creates and places a chess piece on this <code>Board</code>.
 	 * 
 	 * @param type
 	 *            Type of the chess piece to be created.
@@ -133,7 +127,7 @@ public class Board extends Table {
 	 * @param isWhite
 	 *            Determines whether the chess piece is white or black.
 	 */
-	private void addPiece(PieceType type, int x, int y, boolean isWhite) {
+	public void addPiece(PieceType type, int x, int y, boolean isWhite) {
 		Piece piece;
 
 		switch (type) {
@@ -166,9 +160,38 @@ public class Board extends Table {
 		this.pieces[x][y] = piece;
 	}
 
-	public void relocatePiece(int xOld, int yOld, int x, int y) {
+	/**
+	 * Changes the location of a piece. Doesn't check if a piece exists at the
+	 * given location.
+	 * 
+	 * @param xOld
+	 *            Horizontal index of the piece's current tile.
+	 * @param yOld
+	 *            Vertical index of the piece's current tile.
+	 * @param x
+	 *            Horizontal index of the piece's new tile.
+	 * @param y
+	 *            Vertical index of the piece's new tile.
+	 */
+	public void relocatePieceAt(int xOld, int yOld, int x, int y) {
 		this.pieces[x][y] = this.pieces[xOld][yOld];
 		this.pieces[xOld][yOld] = null;
 	}
 
+	/**
+	 * Removes a piece that is on a given tile location.
+	 * 
+	 * @param x
+	 *            Horizontal index of the tile.
+	 * @param y
+	 *            Vertical index of the tile.
+	 */
+	public void removePieceAt(int x, int y) {
+		Piece piece = this.pieces[x][y];
+
+		if (piece != null) {
+			piece.remove();
+			this.pieces[x][y] = null;
+		}
+	}
 }

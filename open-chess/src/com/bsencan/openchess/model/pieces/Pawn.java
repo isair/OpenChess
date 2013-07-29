@@ -25,6 +25,7 @@ public class Pawn extends Piece {
 
 	public Pawn(int x, int y, boolean isWhite) {
 		super(x, y, isWhite, isWhite ? "white-pawn" : "black-pawn");
+		this.canCaptureWithMove = false;
 
 		/* Add valid moves. */
 		this.validMoves.add(new Move(0, 1, false));

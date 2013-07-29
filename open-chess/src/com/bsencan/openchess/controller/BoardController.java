@@ -60,23 +60,31 @@ public class BoardController extends ActorGestureListener {
 
 	private void movePiece(Piece selectedPiece, int x, int y) {
 
-		if (selectedPiece == null) {
+		/* Check movement validity. */
+		if ((selectedPiece == null)
+				|| !this.board.getTileAt(x, y).isHighlighted) {
 			return;
 		}
 
-		if (this.board.getTileAt(x, y).isHighlighted) {
-			int xOld = (int) selectedPiece.getX() / OpenChess.PSIZE;
-			int yOld = (int) selectedPiece.getY() / OpenChess.PSIZE;
+		int xOld = (int) selectedPiece.getX() / OpenChess.PSIZE;
+		int yOld = (int) selectedPiece.getY() / OpenChess.PSIZE;
 
-			this.toggleMoveHighlightsForPiece(selectedPiece);
+		/* Remove highlights. */
+		this.toggleMoveHighlightsForPiece(selectedPiece);
 
-			this.board.relocatePiece(xOld, yOld, x, y);
-			selectedPiece.setX(x * OpenChess.PSIZE);
-			selectedPiece.setY(y * OpenChess.PSIZE);
-
-			this.board.selectedPiece = null;
-			this.board.round++;
+		/* Capture. */
+		if (this.board.getPieceAt(x, y) != null) {
+			this.board.removePieceAt(x, y);
 		}
+
+		/* Move. */
+		this.board.relocatePieceAt(xOld, yOld, x, y);
+		selectedPiece.setX(x * OpenChess.PSIZE);
+		selectedPiece.setY(y * OpenChess.PSIZE);
+
+		/* Deselect and advance round. */
+		this.board.selectedPiece = null;
+		this.board.round++;
 	}
 
 	private void selectPiece(Piece piece) {
@@ -103,8 +111,14 @@ public class BoardController extends ActorGestureListener {
 
 				if ((hX > -1) && (hX < 8) && (hY > -1) && (hY < 8)) {
 					Tile tile = this.board.getTileAt(hX, hY);
+					Piece otherPiece = this.board.getPieceAt(hX, hY);
 
-					if (this.board.getPieceAt(hX, hY) != null) {
+					if (otherPiece != null) {
+
+						if ((otherPiece.isWhite != piece.isWhite)
+								&& piece.canCaptureWithMove) {
+							tile.isHighlighted = !tile.isHighlighted;
+						}
 						isLooping = false;
 					} else {
 						tile.isHighlighted = !tile.isHighlighted;
@@ -119,5 +133,4 @@ public class BoardController extends ActorGestureListener {
 			}
 		}
 	}
-
 }

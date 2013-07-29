@@ -28,6 +28,7 @@ import com.bsencan.openchess.OpenChess;
 public class Piece extends Actor {
 
 	public boolean isWhite;
+	public boolean canCaptureWithMove = true;
 
 	/**
 	 * An array that contains valid moves for the chess piece.
