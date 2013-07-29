@@ -11,3 +11,5 @@ Thumbs.db
 *.dex
 bin/
 gen/
+gwt-unitCache/
+war/
