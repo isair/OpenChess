@@ -15,7 +15,6 @@ package com.bsencan.openchess.view;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL10;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.bsencan.openchess.OpenChess;
 import com.bsencan.openchess.model.Board;
@@ -29,10 +28,8 @@ import com.bsencan.openchess.screens.GameScreen;
 public class GameRenderer implements Renderer {
 
 	private final Stage stage = new Stage();
-	private final OrthographicCamera camera = new OrthographicCamera();
 
 	public GameRenderer(Board board) {
-		this.stage.setCamera(this.camera);
 		this.stage.addActor(board);
 		Gdx.input.setInputProcessor(this.stage);
 		// TODO: Initialize UI.
@@ -49,13 +46,12 @@ public class GameRenderer implements Renderer {
 
 	@Override
 	public void setSize(int width, int height) {
+		float vW = OpenChess.UWIDTH; // Viewport width.
+		float vH = vW * ((float) height / width); // Viewport height.
+
 		// TODO: Position UI.
-		this.camera.viewportWidth = OpenChess.UWIDTH;
-		this.camera.viewportHeight = this.camera.viewportWidth
-				* ((float) height / width);
-		this.camera.position.set(OpenChess.UWIDTH / 2,
-				this.camera.viewportHeight / 2, 0);
-		this.camera.update();
+
+		this.stage.setViewport(vW, vH, true, vW / 2, vH / 2, vW, vH);
 	}
 
 	@Override
