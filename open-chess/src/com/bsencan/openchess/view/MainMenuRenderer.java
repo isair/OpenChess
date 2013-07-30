@@ -76,7 +76,7 @@ public class MainMenuRenderer implements Renderer {
 		float vW = 480; // Viewport width.
 		float vH = vW * ((float) height / width); // Viewport height.
 
-		this.stage.setViewport(vW, vH, true, vW / 2, vH / 2, vW, vH);
+		this.stage.setViewport(vW, vH, true, vW / 2, vH / 2, width, height);
 		this.positionUI();
 	}
 

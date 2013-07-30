@@ -30,8 +30,8 @@ public class GameRenderer implements Renderer {
 	private final Stage stage = new Stage();
 
 	public GameRenderer(Board board) {
-		this.stage.addActor(board);
 		Gdx.input.setInputProcessor(this.stage);
+		this.stage.addActor(board);
 		// TODO: Initialize UI.
 	}
 
@@ -51,7 +51,7 @@ public class GameRenderer implements Renderer {
 
 		// TODO: Position UI.
 
-		this.stage.setViewport(vW, vH, true, vW / 2, vH / 2, vW, vH);
+		this.stage.setViewport(vW, vH, true, vW / 2, vH / 2, width, height);
 	}
 
 	@Override
