@@ -28,12 +28,20 @@ import com.bsencan.openchess.OpenChess;
 public class Piece extends Actor {
 
 	public boolean isWhite;
-	public boolean canCaptureWithMove = true;
+	public boolean canCaptureWithMove = true; // Can this piece capture an enemy
+												// piece using one of its normal
+												// moves?
 
 	/**
 	 * An array that contains valid moves for the chess piece.
 	 */
 	public Array<Move> validMoves = new Array<Move>();
+
+	/**
+	 * An array that contains moves for the chess piece that are valid only when
+	 * used for capturing other pieces.
+	 */
+	public Array<Move> captureOnlyMoves = new Array<Move>();
 
 	private final TextureRegion textureRegion;
 

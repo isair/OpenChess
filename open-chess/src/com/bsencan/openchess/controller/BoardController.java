@@ -96,6 +96,7 @@ public class BoardController extends ActorGestureListener {
 		this.toggleMoveHighlightsForPiece(piece);
 	}
 
+	// TODO: Optimize before writing javadoc comments for this.
 	private void toggleMoveHighlightsForPiece(Piece piece) {
 		int x = (int) piece.getX() / OpenChess.PSIZE;
 		int y = (int) piece.getY() / OpenChess.PSIZE;
@@ -132,5 +133,23 @@ public class BoardController extends ActorGestureListener {
 				}
 			}
 		}
+
+		for (Move move : piece.captureOnlyMoves) {
+			int hX = x + move.xOffset; // Highlight x.
+			int hY = y + (piece.isWhite ? move.yOffset : -move.yOffset); // Highlight
+																			// y.
+			if ((hX > -1) && (hX < 8) && (hY > -1) && (hY < 8)) {
+				Tile tile = this.board.getTileAt(hX, hY);
+				Piece otherPiece = this.board.getPieceAt(hX, hY);
+
+				if ((otherPiece != null)
+						&& (otherPiece.isWhite != piece.isWhite)) {
+
+					tile.isHighlighted = !tile.isHighlighted;
+
+				}
+			}
+		}
 	}
+
 }

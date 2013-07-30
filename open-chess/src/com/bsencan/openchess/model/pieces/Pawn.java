@@ -30,6 +30,10 @@ public class Pawn extends Piece {
 		/* Add valid moves. */
 		this.validMoves.add(new Move(0, 1, false));
 		this.validMoves.add(new Move(0, 2, false));
+
+		/* Add capture-only moves. */
+		this.captureOnlyMoves.add(new Move(1, 1, false));
+		this.captureOnlyMoves.add(new Move(-1, 1, false));
 	}
 
 	/* Ensure pawns can move 2 tiles forward the first time only. */
