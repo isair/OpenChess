@@ -15,11 +15,9 @@ package com.bsencan.openchess.view;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL10;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.bsencan.openchess.Assets;
-import com.bsencan.openchess.OpenChess;
 import com.bsencan.openchess.screens.MainMenuScreen;
 
 /**
@@ -30,13 +28,11 @@ import com.bsencan.openchess.screens.MainMenuScreen;
 public class MainMenuRenderer implements Renderer {
 
 	private final Stage stage = new Stage();
-	private final OrthographicCamera camera = new OrthographicCamera();
 
 	private Label titleLabel;
 	private Label startLabel;
 
 	public MainMenuRenderer() {
-		this.stage.setCamera(this.camera);
 		this.initUI();
 	}
 
@@ -45,7 +41,11 @@ public class MainMenuRenderer implements Renderer {
 	 */
 	public void initUI() {
 		this.titleLabel = new Label("Open Chess", Assets.skin, "title");
+		this.titleLabel.setWrap(true);
+
 		this.startLabel = new Label("Tap to Play", Assets.skin);
+		this.startLabel.setWrap(true);
+
 		this.stage.addActor(this.titleLabel);
 		this.stage.addActor(this.startLabel);
 	}
@@ -54,9 +54,10 @@ public class MainMenuRenderer implements Renderer {
 	 * Positions UI elements.
 	 */
 	public void positionUI() {
-		float cX = OpenChess.UWIDTH / 2; // X coordinate of screen's center.
-		float cY = this.camera.viewportHeight / 2; // Y coordinate of screen's
-													// center.
+		float cX = this.stage.getWidth() / 2; // X coordinate of screen's
+												// center.
+		float cY = this.stage.getHeight() / 2; // Y coordinate of screen's
+												// center.
 
 		this.titleLabel.setPosition(cX - (this.titleLabel.getWidth() / 2), cY);
 		this.startLabel.setPosition(cX - (this.startLabel.getWidth() / 2), cY
@@ -72,12 +73,10 @@ public class MainMenuRenderer implements Renderer {
 
 	@Override
 	public void setSize(int width, int height) {
-		this.camera.viewportWidth = OpenChess.UWIDTH;
-		this.camera.viewportHeight = this.camera.viewportWidth
-				* ((float) height / width);
-		this.camera.position.set(OpenChess.UWIDTH / 2,
-				this.camera.viewportHeight / 2, 0);
-		this.camera.update();
+		float vW = 480; // Viewport width.
+		float vH = vW * ((float) height / width); // Viewport height.
+
+		this.stage.setViewport(vW, vH, true, vW / 2, vH / 2, vW, vH);
 		this.positionUI();
 	}
 

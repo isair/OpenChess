@@ -18,7 +18,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Array;
 import com.bsencan.openchess.Assets;
-import com.bsencan.openchess.OpenChess;
 
 /**
  * <code>Piece</code> is a simple {@link Actor} implementation of a chess piece.
@@ -59,9 +58,7 @@ public class Piece extends Actor {
 	 *            that graphically represents this chess piece.
 	 */
 	public Piece(int x, int y, boolean isWhite, String regionName) {
-		int ps = OpenChess.PSIZE;
-
-		this.setBounds(x * ps, y * ps, ps, ps);
+		this.setBounds(x, y, 1, 1);
 		this.isWhite = isWhite;
 		this.textureRegion = Assets.gameAtlas.findRegion(regionName);
 	}
@@ -69,8 +66,7 @@ public class Piece extends Actor {
 	@Override
 	public void draw(SpriteBatch batch, float parentAlpha) {
 		super.draw(batch, parentAlpha);
-		batch.draw(this.textureRegion, this.getX(), this.getY(),
-				this.getWidth(), this.getHeight());
+		batch.draw(this.textureRegion, this.getX(), this.getY(), 1, 1);
 	}
 
 }

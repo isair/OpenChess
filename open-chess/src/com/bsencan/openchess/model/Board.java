@@ -31,7 +31,11 @@ import com.bsencan.openchess.model.pieces.Rook;
  */
 public class Board extends Table {
 
+	public King whiteKing;
+	public King blackKing;
 	public Piece selectedPiece;
+	public boolean whiteCheck;
+	public boolean blackCheck;
 	public int round;
 
 	/**
@@ -84,80 +88,46 @@ public class Board extends Table {
 	public void populate() {
 		/* Add pawns. */
 		for (int i = 0; i < 8; i++) {
-			this.addPiece(PieceType.Pawn, i, 1, true);
-			this.addPiece(PieceType.Pawn, i, 6, false);
+			this.addPiece(new Pawn(i, 1, true));
+			this.addPiece(new Pawn(i, 6, false));
 		}
 
 		/* Add rooks. */
-		this.addPiece(PieceType.Rook, 0, 0, true);
-		this.addPiece(PieceType.Rook, 7, 0, true);
-		this.addPiece(PieceType.Rook, 0, 7, false);
-		this.addPiece(PieceType.Rook, 7, 7, false);
+		this.addPiece(new Rook(0, 0, true));
+		this.addPiece(new Rook(7, 0, true));
+		this.addPiece(new Rook(0, 7, false));
+		this.addPiece(new Rook(7, 7, false));
 
 		/* Add knights. */
-		this.addPiece(PieceType.Knight, 1, 0, true);
-		this.addPiece(PieceType.Knight, 6, 0, true);
-		this.addPiece(PieceType.Knight, 1, 7, false);
-		this.addPiece(PieceType.Knight, 6, 7, false);
+		this.addPiece(new Knight(1, 0, true));
+		this.addPiece(new Knight(6, 0, true));
+		this.addPiece(new Knight(1, 7, false));
+		this.addPiece(new Knight(6, 7, false));
 
 		/* Add bishops. */
-		this.addPiece(PieceType.Bishop, 2, 0, true);
-		this.addPiece(PieceType.Bishop, 5, 0, true);
-		this.addPiece(PieceType.Bishop, 2, 7, false);
-		this.addPiece(PieceType.Bishop, 5, 7, false);
+		this.addPiece(new Bishop(2, 0, true));
+		this.addPiece(new Bishop(5, 0, true));
+		this.addPiece(new Bishop(2, 7, false));
+		this.addPiece(new Bishop(5, 7, false));
 
 		/* Add queens. */
-		this.addPiece(PieceType.Queen, 3, 0, true);
-		this.addPiece(PieceType.Queen, 3, 7, false);
+		this.addPiece(new Queen(3, 0, true));
+		this.addPiece(new Queen(3, 7, false));
 
 		/* Add kings. */
-		this.addPiece(PieceType.King, 4, 0, true);
-		this.addPiece(PieceType.King, 4, 7, false);
+		this.addPiece(new King(4, 0, true));
+		this.addPiece(new King(4, 7, false));
 	}
 
 	/**
-	 * Creates and places a chess piece on this <code>Board</code>.
+	 * Places a chess piece on this <code>Board</code>.
 	 * 
-	 * @param type
-	 *            Type of the chess piece to be created.
-	 * @param x
-	 *            Horizontal index of its tile.
-	 * @param y
-	 *            Vertical index of its tile.
-	 * @param isWhite
-	 *            Determines whether the chess piece is white or black.
+	 * @param piece
+	 *            Piece to place.
 	 */
-	public void addPiece(PieceType type, int x, int y, boolean isWhite) {
-		Piece piece;
-
-		switch (type) {
-		default:
-		case Pawn:
-			piece = new Pawn(x, y, isWhite);
-			break;
-
-		case Rook:
-			piece = new Rook(x, y, isWhite);
-			break;
-
-		case Knight:
-			piece = new Knight(x, y, isWhite);
-			break;
-
-		case Bishop:
-			piece = new Bishop(x, y, isWhite);
-			break;
-
-		case Queen:
-			piece = new Queen(x, y, isWhite);
-			break;
-
-		case King:
-			piece = new King(x, y, isWhite);
-			break;
-		}
+	public void addPiece(Piece piece) {
 		this.addActor(piece);
-		this.pieces[x][y] = piece;
+		this.pieces[(int) piece.getX()][(int) piece.getY()] = piece;
 	}
 
 	/**

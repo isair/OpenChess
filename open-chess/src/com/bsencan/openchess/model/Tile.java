@@ -17,7 +17,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.bsencan.openchess.Assets;
-import com.bsencan.openchess.OpenChess;
 
 /**
  * Represents a single tile on a chess board.
@@ -42,9 +41,7 @@ public class Tile extends Actor {
 	 *            Determines whether the tile will be light or dark colored.
 	 */
 	public Tile(int x, int y, boolean isDark) {
-		int ps = OpenChess.PSIZE;
-
-		this.setBounds(x * ps, y * ps, ps, ps);
+		this.setBounds(x, y, 1, 1);
 
 		if (isDark) {
 			this.textureRegion = Assets.gameAtlas.findRegion("tile-2");
@@ -63,10 +60,9 @@ public class Tile extends Actor {
 
 		if (this.isHighlighted) {
 			batch.draw(this.highlightedTextureRegion, this.getX(), this.getY(),
-					this.getWidth(), this.getHeight());
+					1, 1);
 		} else {
-			batch.draw(this.textureRegion, this.getX(), this.getY(),
-					this.getWidth(), this.getHeight());
+			batch.draw(this.textureRegion, this.getX(), this.getY(), 1, 1);
 		}
 	}
 

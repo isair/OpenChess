@@ -16,7 +16,6 @@ package com.bsencan.openchess.controller;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ActorGestureListener;
-import com.bsencan.openchess.OpenChess;
 import com.bsencan.openchess.model.Board;
 import com.bsencan.openchess.model.Move;
 import com.bsencan.openchess.model.Piece;
@@ -40,9 +39,8 @@ public class BoardController extends ActorGestureListener {
 	@Override
 	public void tap(InputEvent event, float x, float y, int count, int button) {
 		Actor target = event.getTarget(); // Tapped actor.
-		int ps = OpenChess.PSIZE; // Piece size.
-		int tx = (int) target.getX() / ps; // Tapped tile x.
-		int ty = (int) target.getY() / ps; // Tapped tile y.
+		int tx = (int) target.getX(); // Tapped tile x.
+		int ty = (int) target.getY(); // Tapped tile y.
 
 		if (target.getClass().getSuperclass().equals(Piece.class)) {
 			Piece piece = (Piece) target;
@@ -66,8 +64,8 @@ public class BoardController extends ActorGestureListener {
 			return;
 		}
 
-		int xOld = (int) selectedPiece.getX() / OpenChess.PSIZE;
-		int yOld = (int) selectedPiece.getY() / OpenChess.PSIZE;
+		int xOld = (int) selectedPiece.getX();
+		int yOld = (int) selectedPiece.getY();
 
 		/* Remove highlights. */
 		this.toggleMoveHighlightsForPiece(selectedPiece);
@@ -79,8 +77,8 @@ public class BoardController extends ActorGestureListener {
 
 		/* Move. */
 		this.board.relocatePieceAt(xOld, yOld, x, y);
-		selectedPiece.setX(x * OpenChess.PSIZE);
-		selectedPiece.setY(y * OpenChess.PSIZE);
+		selectedPiece.setX(x);
+		selectedPiece.setY(y);
 
 		/* Deselect and advance round. */
 		this.board.selectedPiece = null;
@@ -98,8 +96,8 @@ public class BoardController extends ActorGestureListener {
 
 	// TODO: Optimize before writing javadoc comments for this.
 	private void toggleMoveHighlightsForPiece(Piece piece) {
-		int x = (int) piece.getX() / OpenChess.PSIZE;
-		int y = (int) piece.getY() / OpenChess.PSIZE;
+		int x = (int) piece.getX();
+		int y = (int) piece.getY();
 
 		for (Move move : piece.validMoves) {
 			boolean isLooping = true;
@@ -146,7 +144,6 @@ public class BoardController extends ActorGestureListener {
 						&& (otherPiece.isWhite != piece.isWhite)) {
 
 					tile.isHighlighted = !tile.isHighlighted;
-
 				}
 			}
 		}

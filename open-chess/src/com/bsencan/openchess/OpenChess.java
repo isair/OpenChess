@@ -31,14 +31,10 @@ public class OpenChess extends Game {
 	/**
 	 * Unit width of the screen. Everything in this game is rendered in game
 	 * units instead of pixels for scalability. This variable determines the
-	 * width of the screen in terms of game units.
+	 * width of the screen in terms of game units. It is important to note that
+	 * each chess piece is 1 unit wide and 1 unit long.
 	 */
-	public static final int UWIDTH = 480;
-
-	/**
-	 * Unit size of a single dimension of a chess piece.
-	 */
-	public static final int PSIZE = (UWIDTH / 8);
+	public static final int UWIDTH = 8;
 
 	@Override
 	public void create() {
