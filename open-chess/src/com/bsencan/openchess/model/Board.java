@@ -14,6 +14,7 @@
 package com.bsencan.openchess.model;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.Array;
 import com.bsencan.openchess.OpenChess;
 import com.bsencan.openchess.controller.BoardController;
 import com.bsencan.openchess.model.pieces.Bishop;
@@ -34,8 +35,6 @@ public class Board extends Table {
 	public King whiteKing;
 	public King blackKing;
 	public Piece selectedPiece;
-	public boolean whiteCheck;
-	public boolean blackCheck;
 	public int round;
 
 	/**
@@ -115,8 +114,10 @@ public class Board extends Table {
 		this.addPiece(new Queen(3, 7, false));
 
 		/* Add kings. */
-		this.addPiece(new King(4, 0, true));
-		this.addPiece(new King(4, 7, false));
+		this.whiteKing = new King(4, 0, true);
+		this.blackKing = new King(4, 7, false);
+		this.addPiece(this.whiteKing);
+		this.addPiece(this.blackKing);
 	}
 
 	/**
@@ -164,4 +165,51 @@ public class Board extends Table {
 			this.pieces[x][y] = null;
 		}
 	}
+
+	/**
+	 * Checks if a tile is safe against any capture moves that can be made by an
+	 * enemy piece.
+	 * 
+	 * @param x
+	 *            Horizontal index of the tile.
+	 * @param y
+	 *            Vertical index of the tile.
+	 * @param forWhite
+	 *            Are we checking tile safety for white pieces?
+	 * @return True if tile is safe.
+	 */
+	public boolean isTileSafe(int x, int y, boolean forWhite) {
+
+		for (Piece[] row : this.pieces) {
+
+			for (Piece piece : row) {
+
+				/*
+				 * If piece belongs to the opponent then check if it threatens
+				 * this tile by tracing its possible capture moves.
+				 * 
+				 * This code could be optimized to be faster as it first adds
+				 * all tiles to an array and THEN searches through them.
+				 */
+				if (piece.isWhite != forWhite) {
+					Array<Tile> threatenedTiles;
+					int px = (int) piece.getX();
+					int py = (int) piece.getY();
+
+					if (piece.canCaptureWithMove) {
+						threatenedTiles = piece.getValidMoveTiles(this);
+						threatenedTiles.addAll(piece.getCaptureOnlyTiles(this));
+					} else {
+						threatenedTiles = piece.getCaptureOnlyTiles(this);
+					}
+
+					if (threatenedTiles.contains(this.tiles[px][py], false)) {
+						return false;
+					}
+				}
+			}
+		}
+		return true;
+	}
+
 }

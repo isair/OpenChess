@@ -37,12 +37,4 @@ public class King extends Piece {
 		this.validMoves.add(new Move(-1, 1, false));
 	}
 
-	/**
-	 * Check algorithm.
-	 * 
-	 * @return True if check conditions are met.
-	 */
-	public boolean check() {
-		return false;
-	}
 }

@@ -16,10 +16,11 @@ package com.bsencan.openchess.controller;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ActorGestureListener;
+import com.badlogic.gdx.utils.Array;
 import com.bsencan.openchess.model.Board;
-import com.bsencan.openchess.model.Move;
 import com.bsencan.openchess.model.Piece;
 import com.bsencan.openchess.model.Tile;
+import com.bsencan.openchess.model.pieces.King;
 
 /**
  * This class is under heavy development. As it keeps changing with rapid speed,
@@ -31,6 +32,8 @@ import com.bsencan.openchess.model.Tile;
 public class BoardController extends ActorGestureListener {
 
 	private final Board board;
+	private boolean whiteCheck;
+	private boolean blackCheck;
 
 	public BoardController(Board board) {
 		this.board = board;
@@ -94,58 +97,22 @@ public class BoardController extends ActorGestureListener {
 		this.toggleMoveHighlightsForPiece(piece);
 	}
 
-	// TODO: Optimize before writing javadoc comments for this.
+	// TODO: Complete before writing javadoc comments for this.
 	private void toggleMoveHighlightsForPiece(Piece piece) {
-		int x = (int) piece.getX();
-		int y = (int) piece.getY();
+		Array<Tile> validMoveTiles = piece.getValidMoveTiles(this.board);
+		Array<Tile> captureOnlyTiles = piece.getCaptureOnlyTiles(this.board);
+		int tileCount = validMoveTiles.size + captureOnlyTiles.size;
 
-		for (Move move : piece.validMoves) {
-			boolean isLooping = true;
-
-			for (int i = 1; isLooping; i++) {
-				int hX = x + (move.xOffset * i); // Highlight x.
-				int hY = y
-						+ ((piece.isWhite ? move.yOffset : -move.yOffset) * i); // Highlight
-																				// y.
-
-				if ((hX > -1) && (hX < 8) && (hY > -1) && (hY < 8)) {
-					Tile tile = this.board.getTileAt(hX, hY);
-					Piece otherPiece = this.board.getPieceAt(hX, hY);
-
-					if (otherPiece != null) {
-
-						if ((otherPiece.isWhite != piece.isWhite)
-								&& piece.canCaptureWithMove) {
-							tile.isHighlighted = !tile.isHighlighted;
-						}
-						isLooping = false;
-					} else {
-						tile.isHighlighted = !tile.isHighlighted;
-					}
-				} else {
-					isLooping = false;
-				}
-
-				if (!move.continuous) {
-					isLooping = false;
-				}
-			}
+		for (Tile tile : validMoveTiles) {
+			tile.isHighlighted = !tile.isHighlighted;
 		}
 
-		for (Move move : piece.captureOnlyMoves) {
-			int hX = x + move.xOffset; // Highlight x.
-			int hY = y + (piece.isWhite ? move.yOffset : -move.yOffset); // Highlight
-																			// y.
-			if ((hX > -1) && (hX < 8) && (hY > -1) && (hY < 8)) {
-				Tile tile = this.board.getTileAt(hX, hY);
-				Piece otherPiece = this.board.getPieceAt(hX, hY);
+		for (Tile tile : captureOnlyTiles) {
+			tile.isHighlighted = !tile.isHighlighted;
+		}
 
-				if ((otherPiece != null)
-						&& (otherPiece.isWhite != piece.isWhite)) {
-
-					tile.isHighlighted = !tile.isHighlighted;
-				}
-			}
+		if ((piece instanceof King) && (tileCount == 0)) {
+			// TODO: If the King has nowhere to go, check for checkmate.
 		}
 	}
 

@@ -34,13 +34,13 @@ public class Piece extends Actor {
 	/**
 	 * An array that contains valid moves for the chess piece.
 	 */
-	public Array<Move> validMoves = new Array<Move>();
+	protected Array<Move> validMoves = new Array<Move>();
 
 	/**
 	 * An array that contains moves for the chess piece that are valid only when
 	 * used for capturing other pieces.
 	 */
-	public Array<Move> captureOnlyMoves = new Array<Move>();
+	protected Array<Move> captureOnlyMoves = new Array<Move>();
 
 	private final TextureRegion textureRegion;
 
@@ -61,6 +61,84 @@ public class Piece extends Actor {
 		this.setBounds(x, y, 1, 1);
 		this.isWhite = isWhite;
 		this.textureRegion = Assets.gameAtlas.findRegion(regionName);
+	}
+
+	/**
+	 * Returns tiles on a board that can be accessed by this
+	 * <code>Piece<code> instance according to its <code>validMoves</code>
+	 * array.
+	 * 
+	 * @param board
+	 * @return
+	 */
+	public Array<Tile> getValidMoveTiles(Board board) {
+		Array<Tile> tiles = new Array<Tile>();
+		int x = (int) this.getX();
+		int y = (int) this.getY();
+
+		for (Move move : this.validMoves) {
+			boolean isLooping = true;
+
+			for (int i = 1; isLooping; i++) {
+				int tx = x + (move.xOffset * i); // Tile x.
+				int ty = y
+						+ ((this.isWhite ? move.yOffset : -move.yOffset) * i); // Tile
+																				// y.
+
+				if ((tx > -1) && (tx < 8) && (ty > -1) && (ty < 8)) {
+					Tile tile = board.getTileAt(tx, ty);
+					Piece otherPiece = board.getPieceAt(tx, ty);
+
+					if (otherPiece != null) {
+
+						if ((otherPiece.isWhite != this.isWhite)
+								&& this.canCaptureWithMove) {
+							tiles.add(tile);
+						}
+						isLooping = false;
+					} else {
+						tiles.add(tile);
+					}
+				} else {
+					isLooping = false;
+				}
+
+				if (!move.continuous) {
+					isLooping = false;
+				}
+			}
+		}
+		return tiles;
+	}
+
+	/**
+	 * Returns tiles on a board that can be accessed by this
+	 * <code>Piece<code> instance according to its <code>captureOnlyMoves</code>
+	 * array.
+	 * 
+	 * @param board
+	 * @return
+	 */
+	public Array<Tile> getCaptureOnlyTiles(Board board) {
+		Array<Tile> tiles = new Array<Tile>();
+		int x = (int) this.getX();
+		int y = (int) this.getY();
+
+		for (Move move : this.captureOnlyMoves) {
+			int tx = x + move.xOffset; // Tile x.
+			int ty = y + (this.isWhite ? move.yOffset : -move.yOffset); // Tile
+																		// y.
+			if ((tx > -1) && (tx < 8) && (ty > -1) && (ty < 8)) {
+				Tile tile = board.getTileAt(tx, ty);
+				Piece otherPiece = board.getPieceAt(tx, ty);
+
+				if ((otherPiece != null)
+						&& (otherPiece.isWhite != this.isWhite)) {
+					tiles.add(tile);
+				}
+			}
+		}
+		return tiles;
 	}
 
 	@Override
