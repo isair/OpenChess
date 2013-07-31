@@ -32,8 +32,6 @@ import com.bsencan.openchess.model.pieces.King;
 public class BoardController extends ActorGestureListener {
 
 	private final Board board;
-	private boolean whiteCheck;
-	private boolean blackCheck;
 
 	public BoardController(Board board) {
 		this.board = board;
@@ -99,19 +97,22 @@ public class BoardController extends ActorGestureListener {
 
 	// TODO: Complete before writing javadoc comments for this.
 	private void toggleMoveHighlightsForPiece(Piece piece) {
-		Array<Tile> validMoveTiles = piece.getValidMoveTiles(this.board);
-		Array<Tile> captureOnlyTiles = piece.getCaptureOnlyTiles(this.board);
-		int tileCount = validMoveTiles.size + captureOnlyTiles.size;
+		Array<Tile> tiles = piece.getValidMoveTiles(this.board);
 
-		for (Tile tile : validMoveTiles) {
-			tile.isHighlighted = !tile.isHighlighted;
+		tiles.addAll(piece.getCaptureOnlyTiles(this.board, true));
+
+		for (Tile tile : tiles) {
+			int tx = (int) tile.getX();
+			int ty = (int) tile.getY();
+
+			/* Make sure if piece is a King, it can only move to safe tiles. */
+			if (!(piece instanceof King)
+					|| this.board.isTileSafe(tx, ty, piece.isWhite)) {
+				tile.isHighlighted = !tile.isHighlighted;
+			}
 		}
 
-		for (Tile tile : captureOnlyTiles) {
-			tile.isHighlighted = !tile.isHighlighted;
-		}
-
-		if ((piece instanceof King) && (tileCount == 0)) {
+		if ((piece instanceof King) && (tiles.size == 0)) {
 			// TODO: If the King has nowhere to go, check for checkmate.
 		}
 	}

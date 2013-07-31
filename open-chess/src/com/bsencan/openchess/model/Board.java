@@ -32,8 +32,6 @@ import com.bsencan.openchess.model.pieces.Rook;
  */
 public class Board extends Table {
 
-	public King whiteKing;
-	public King blackKing;
 	public Piece selectedPiece;
 	public int round;
 
@@ -114,10 +112,8 @@ public class Board extends Table {
 		this.addPiece(new Queen(3, 7, false));
 
 		/* Add kings. */
-		this.whiteKing = new King(4, 0, true);
-		this.blackKing = new King(4, 7, false);
-		this.addPiece(this.whiteKing);
-		this.addPiece(this.blackKing);
+		this.addPiece(new King(4, 0, true));
+		this.addPiece(new King(4, 7, false));
 	}
 
 	/**
@@ -187,24 +183,24 @@ public class Board extends Table {
 				/*
 				 * If piece belongs to the opponent then check if it threatens
 				 * this tile by tracing its possible capture moves.
-				 * 
-				 * This code could be optimized to be faster as it first adds
-				 * all tiles to an array and THEN searches through them.
 				 */
-				if (piece.isWhite != forWhite) {
+				if ((piece != null) && (piece.isWhite != forWhite)) {
 					Array<Tile> threatenedTiles;
-					int px = (int) piece.getX();
-					int py = (int) piece.getY();
 
 					if (piece.canCaptureWithMove) {
 						threatenedTiles = piece.getValidMoveTiles(this);
-						threatenedTiles.addAll(piece.getCaptureOnlyTiles(this));
+						threatenedTiles.addAll(piece.getCaptureOnlyTiles(this,
+								false));
 					} else {
-						threatenedTiles = piece.getCaptureOnlyTiles(this);
+						threatenedTiles = piece
+								.getCaptureOnlyTiles(this, false);
 					}
 
-					if (threatenedTiles.contains(this.tiles[px][py], false)) {
-						return false;
+					for (Tile tile : threatenedTiles) {
+
+						if ((x == tile.getX()) && (y == tile.getY())) {
+							return false;
+						}
 					}
 				}
 			}
