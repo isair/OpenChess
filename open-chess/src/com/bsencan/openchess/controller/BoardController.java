@@ -20,8 +20,6 @@ import com.badlogic.gdx.utils.Array;
 import com.bsencan.openchess.model.Board;
 import com.bsencan.openchess.model.Piece;
 import com.bsencan.openchess.model.Tile;
-import com.bsencan.openchess.model.pieces.Pawn;
-import com.bsencan.openchess.model.pieces.Queen;
 
 /**
  * This class is under heavy development. As it keeps changing with rapid speed,
@@ -79,13 +77,6 @@ public class BoardController extends ActorGestureListener {
 		/* Move. */
 		this.board.relocatePieceAt(xOld, yOld, x, y);
 		this.board.selectedPiece.moved();
-
-		/* Pawn promotion. */
-		if ((piece instanceof Pawn)
-				&& ((piece.isWhite && (y == 7)) || (!piece.isWhite && (y == 0)))) {
-			this.board.removePieceAt(x, y);
-			this.board.addPiece(new Queen(x, y, piece.isWhite));
-		}
 
 		// TODO: Special move checks. (En passant, etc.)
 

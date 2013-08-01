@@ -13,6 +13,7 @@
 
 package com.bsencan.openchess.model.pieces;
 
+import com.bsencan.openchess.model.Board;
 import com.bsencan.openchess.model.Move;
 import com.bsencan.openchess.model.Piece;
 
@@ -36,13 +37,21 @@ public class Pawn extends Piece {
 		this.captureOnlyMoves.add(new Move(-1, 1, false));
 	}
 
-	/* Ensure pawns can move 2 tiles forward the first time only. */
 	@Override
 	public void moved() {
+		Board board = (Board) this.getParent();
+		int x = (int) this.getX();
+		int y = (int) this.getY();
 
+		/* Ensure pawns can move 2 tiles forward the first time only. */
 		if (this.validMoves.size == 2) {
 			this.validMoves.pop();
 		}
-	}
 
+		/* Pawn promotion. */
+		if ((this.isWhite && (y == 7)) || (!this.isWhite && (y == 0))) {
+			board.removePieceAt(x, y);
+			board.addPiece(new Queen(x, y, this.isWhite));
+		}
+	}
 }
