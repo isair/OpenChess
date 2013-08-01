@@ -14,6 +14,7 @@
 package com.bsencan.openchess;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.bsencan.openchess.screens.MainMenuScreen;
 
 /**
@@ -38,6 +39,7 @@ public class OpenChess extends Game {
 
 	@Override
 	public void create() {
+		Gdx.graphics.setContinuousRendering(false);
 		game = this;
 		this.setScreen(new MainMenuScreen());
 	}

@@ -78,6 +78,7 @@ public class MainMenuRenderer implements Renderer {
 
 		this.stage.setViewport(vW, vH, true, vW / 2, vH / 2, width, height);
 		this.positionUI();
+		Gdx.graphics.requestRendering();
 	}
 
 	@Override

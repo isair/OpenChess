@@ -39,7 +39,6 @@ public class GameRenderer implements Renderer {
 	public void render(float delta) {
 		Gdx.gl.glClearColor(.3f, .3f, .4f, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-		this.stage.act(delta);
 		this.stage.draw();
 		// TODO: Draw UI.
 	}
@@ -52,6 +51,7 @@ public class GameRenderer implements Renderer {
 		// TODO: Position UI.
 
 		this.stage.setViewport(vW, vH, true, vW / 2, vH / 2, width, height);
+		Gdx.graphics.requestRendering();
 	}
 
 	@Override

@@ -41,8 +41,13 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void show() {
+		Board board; // Can't call the constructor here. Assets have to be
+						// loaded first.
+
 		Assets.loadGame();
-		this.renderer = new GameRenderer(new Board());
+		board = new Board();
+		board.populate();
+		this.renderer = new GameRenderer(board);
 		this.renderer
 				.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 	}
