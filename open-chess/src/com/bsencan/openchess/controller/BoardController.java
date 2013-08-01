@@ -20,18 +20,17 @@ import com.badlogic.gdx.utils.Array;
 import com.bsencan.openchess.model.Board;
 import com.bsencan.openchess.model.Piece;
 import com.bsencan.openchess.model.Tile;
-import com.bsencan.openchess.model.pieces.King;
 
 /**
  * This class is under heavy development. As it keeps changing with rapid speed,
- * it'll only receive proper Javadoc and normal comments when it's close to
- * completion.
+ * it'll only receive proper javadoc comments when it's close to completion.
  * 
  * @author Baris Sencan
  */
 public class BoardController extends ActorGestureListener {
 
 	private final Board board;
+	private final Array<Tile> highlightedTiles = new Array<Tile>();
 
 	public BoardController(Board board) {
 		this.board = board;
@@ -57,19 +56,18 @@ public class BoardController extends ActorGestureListener {
 		}
 	}
 
-	private void movePiece(Piece selectedPiece, int x, int y) {
+	private void movePiece(Piece piece, int x, int y) {
 
-		/* Check movement validity. */
-		if ((selectedPiece == null)
-				|| !this.board.getTileAt(x, y).isHighlighted) {
+		/* Check move validity. */
+		if ((piece == null) || !this.board.getTileAt(x, y).isHighlighted) {
 			return;
 		}
 
-		int xOld = (int) selectedPiece.getX();
-		int yOld = (int) selectedPiece.getY();
+		int xOld = (int) piece.getX();
+		int yOld = (int) piece.getY();
 
 		/* Remove highlights. */
-		this.toggleMoveHighlightsForPiece(selectedPiece);
+		this.removeMoveHighlights();
 
 		/* Capture. */
 		if (this.board.getPieceAt(x, y) != null) {
@@ -78,8 +76,8 @@ public class BoardController extends ActorGestureListener {
 
 		/* Move. */
 		this.board.relocatePieceAt(xOld, yOld, x, y);
-		selectedPiece.setX(x);
-		selectedPiece.setY(y);
+
+		// TODO: Special move checks. (En passant, etc.)
 
 		/* Deselect and advance round. */
 		this.board.selectedPiece = null;
@@ -87,17 +85,14 @@ public class BoardController extends ActorGestureListener {
 	}
 
 	private void selectPiece(Piece piece) {
-
-		if (this.board.selectedPiece != null) {
-			this.toggleMoveHighlightsForPiece(this.board.selectedPiece);
-		}
+		this.removeMoveHighlights();
 		this.board.selectedPiece = piece;
-		this.toggleMoveHighlightsForPiece(piece);
+		this.addMoveHighlightsForPiece(piece);
 	}
 
 	// TODO: Complete before writing javadoc comments for this.
-	private void toggleMoveHighlightsForPiece(Piece piece) {
-		Array<Tile> tiles = piece.getValidMoveTiles(this.board);
+	private void addMoveHighlightsForPiece(Piece piece) {
+		Array<Tile> tiles = piece.getValidMoveTiles(this.board, true);
 
 		tiles.addAll(piece.getCaptureOnlyTiles(this.board, true));
 
@@ -105,15 +100,18 @@ public class BoardController extends ActorGestureListener {
 			int tx = (int) tile.getX();
 			int ty = (int) tile.getY();
 
-			/* Make sure if piece is a King, it can only move to safe tiles. */
-			if (!(piece instanceof King)
-					|| this.board.isTileSafe(tx, ty, piece.isWhite)) {
-				tile.isHighlighted = !tile.isHighlighted;
+			/* Make sure the move doesn't put the king in check. */
+			if (this.board.isMoveSafe(piece, tx, ty)) {
+				this.highlightedTiles.add(tile);
+				tile.isHighlighted = true;
 			}
 		}
+	}
 
-		if ((piece instanceof King) && (tiles.size == 0)) {
-			// TODO: If the King has nowhere to go, check for checkmate.
+	private void removeMoveHighlights() {
+
+		while (this.highlightedTiles.size > 0) {
+			this.highlightedTiles.pop().isHighlighted = false;
 		}
 	}
 

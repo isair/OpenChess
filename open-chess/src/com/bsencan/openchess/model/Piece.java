@@ -69,10 +69,11 @@ public class Piece extends Actor {
 	 * array.
 	 * 
 	 * @param board
-	 *            The <code>Board</code> instance to fetch the tiles from.
+	 *            The <code>Board</code> instance to fetch tiles from.
+	 * @param checkFriendly
 	 * @return Resulting tile array.
 	 */
-	public Array<Tile> getValidMoveTiles(Board board) {
+	public Array<Tile> getValidMoveTiles(Board board, boolean checkFriendly) {
 		Array<Tile> tiles = new Array<Tile>();
 		int x = (int) this.getX();
 		int y = (int) this.getY();
@@ -92,7 +93,7 @@ public class Piece extends Actor {
 
 					if (otherPiece != null) {
 
-						if ((otherPiece.isWhite != this.isWhite)
+						if ((!checkFriendly || (otherPiece.isWhite != this.isWhite))
 								&& this.canCaptureWithMove) {
 							tiles.add(tile);
 						}
@@ -118,7 +119,7 @@ public class Piece extends Actor {
 	 * array.
 	 * 
 	 * @param board
-	 *            The <code>Board</code> instance to fetch the tiles from.
+	 *            The <code>Board</code> instance to fetch tiles from.
 	 * @param check
 	 *            Check the validity of the capturing move before adding the
 	 *            tile to the list. e.g: If a capturable piece is present.

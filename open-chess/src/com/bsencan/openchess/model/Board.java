@@ -44,6 +44,8 @@ public class Board extends Table {
 	 * Pointers to pieces for easy access.
 	 */
 	private final Piece[][] pieces = new Piece[8][8];
+	private King whiteKing;
+	private King blackKing;
 
 	/* -- Getters -- */
 
@@ -58,7 +60,7 @@ public class Board extends Table {
 	/* -- Getters -- */
 
 	/**
-	 * Creates an empty chess board then populates it.
+	 * Creates an empty chess board.
 	 */
 	public Board() {
 		/* Basic board setup. */
@@ -74,8 +76,6 @@ public class Board extends Table {
 				this.addActor(this.tiles[i][j]);
 			}
 		}
-
-		this.populate();
 	}
 
 	/**
@@ -111,9 +111,11 @@ public class Board extends Table {
 		this.addPiece(new Queen(3, 0, true));
 		this.addPiece(new Queen(3, 7, false));
 
-		/* Add kings. */
-		this.addPiece(new King(4, 0, true));
-		this.addPiece(new King(4, 7, false));
+		/* Set and add kings. */
+		this.whiteKing = new King(4, 0, true);
+		this.blackKing = new King(4, 7, false);
+		this.addPiece(this.whiteKing);
+		this.addPiece(this.blackKing);
 	}
 
 	/**
@@ -141,8 +143,12 @@ public class Board extends Table {
 	 *            Vertical index of the piece's new tile.
 	 */
 	public void relocatePieceAt(int xOld, int yOld, int x, int y) {
-		this.pieces[x][y] = this.pieces[xOld][yOld];
+		Piece piece = this.pieces[xOld][yOld];
+
+		this.pieces[x][y] = piece;
 		this.pieces[xOld][yOld] = null;
+		piece.setX(x);
+		piece.setY(y);
 	}
 
 	/**
@@ -159,6 +165,20 @@ public class Board extends Table {
 		if (piece != null) {
 			piece.remove();
 			this.pieces[x][y] = null;
+		}
+	}
+
+	/**
+	 * Removes all pieces from the <code>Board<code>.
+	 */
+	public void removeAll() {
+
+		for (short x = 0; x < 8; x++) {
+
+			for (short y = 0; y < 8; y++) {
+				this.pieces[x][y].remove();
+				this.pieces[x][y] = null;
+			}
 		}
 	}
 
@@ -188,7 +208,7 @@ public class Board extends Table {
 					Array<Tile> threatenedTiles;
 
 					if (piece.canCaptureWithMove) {
-						threatenedTiles = piece.getValidMoveTiles(this);
+						threatenedTiles = piece.getValidMoveTiles(this, false);
 						threatenedTiles.addAll(piece.getCaptureOnlyTiles(this,
 								false));
 					} else {
@@ -206,6 +226,44 @@ public class Board extends Table {
 			}
 		}
 		return true;
+	}
+
+	/**
+	 * Checks if a move is safe by checking whether the move places the allied
+	 * king in check.
+	 * 
+	 * @param piece
+	 *            <code>Piece</code> instance to be moved.
+	 * @param x
+	 *            Move x.
+	 * @param y
+	 *            Move y.
+	 * @return True if move is safe.
+	 */
+	public boolean isMoveSafe(Piece piece, int x, int y) {
+		Piece capturedPiece = this.getPieceAt(x, y);
+		King king = piece.isWhite ? this.whiteKing : this.blackKing;
+		int xOld = (int) piece.getX();
+		int yOld = (int) piece.getY();
+		boolean isSafe = false;
+
+		/* Simulate move. */
+		if (capturedPiece != null) {
+			this.removePieceAt(x, y);
+		}
+		this.relocatePieceAt(xOld, yOld, x, y);
+
+		/* Check king's safety. */
+		isSafe = this.isTileSafe((int) king.getX(), (int) king.getY(),
+				king.isWhite);
+
+		/* Revert changes made while checking then return the result. */
+		this.relocatePieceAt(x, y, xOld, yOld);
+
+		if (capturedPiece != null) {
+			this.addPiece(capturedPiece);
+		}
+		return isSafe;
 	}
 
 }
