@@ -38,8 +38,7 @@ public class Pawn extends Piece {
 
 	/* Ensure pawns can move 2 tiles forward the first time only. */
 	@Override
-	public void setY(float y) {
-		super.setY(y);
+	public void moved() {
 
 		if (this.validMoves.size == 2) {
 			this.validMoves.pop();

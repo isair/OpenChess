@@ -147,6 +147,13 @@ public class Piece extends Actor {
 		return tiles;
 	}
 
+	/**
+	 * Move event callback. Gets called each time a piece is moved. Should be
+	 * overridden by sub-classes when needed.
+	 */
+	public void moved() {
+	}
+
 	@Override
 	public void draw(SpriteBatch batch, float parentAlpha) {
 		super.draw(batch, parentAlpha);
