@@ -13,9 +13,11 @@
 
 package com.bsencan.openchess.model.pieces;
 
+import com.badlogic.gdx.utils.Array;
 import com.bsencan.openchess.model.Board;
 import com.bsencan.openchess.model.Move;
 import com.bsencan.openchess.model.Piece;
+import com.bsencan.openchess.model.Tile;
 
 /**
  * Represents a king chess piece. See {@link Piece}.
@@ -23,6 +25,8 @@ import com.bsencan.openchess.model.Piece;
  * @author Baris Sencan
  */
 public class King extends Piece {
+
+	private boolean moved;
 
 	public King(int x, int y, boolean isWhite) {
 		super(x, y, isWhite, isWhite ? "white-king" : "black-king");
@@ -36,20 +40,38 @@ public class King extends Piece {
 		this.validMoves.add(new Move(-1, -1, false));
 		this.validMoves.add(new Move(-1, 0, false));
 		this.validMoves.add(new Move(-1, 1, false));
+	}
 
-		/* Castling moves. */
-		this.validMoves.add(new Move(2, 0, false));
-		this.validMoves.add(new Move(-2, 0, false));
+	@Override
+	public Array<Tile> getValidMoveTiles(Board board, boolean checkFriendly) {
+		Array<Tile> tiles = super.getValidMoveTiles(board, checkFriendly);
+		int x = (int) this.getX();
+		int y = (int) this.getY();
+
+		/* Show castling moves if available. */
+		if (!this.moved) {
+
+			if ((board.getPieceAt(x + 1, y) == null)
+					&& (board.getPieceAt(x + 2, y) == null)) {
+				this.validMoves.add(new Move(2, 0, false));
+			}
+
+			if ((board.getPieceAt(x - 1, y) == null)
+					&& (board.getPieceAt(x - 2, y) == null)
+					&& (board.getPieceAt(x - 3, y) == null)) {
+				this.validMoves.add(new Move(-2, 0, false));
+			}
+		}
+		return tiles;
 	}
 
 	@Override
 	public void moved() {
 		int x = (int) this.getX();
 
-		/* Handle castling. */
-		if (this.validMoves.size == 10) {
-			this.validMoves.pop();
-			this.validMoves.pop();
+		/* Handle castling move. */
+		if (!this.moved) {
+			this.moved = true;
 
 			if ((x == 6) || (x == 2)) {
 				Board board = (Board) this.getParent();
@@ -61,9 +83,10 @@ public class King extends Piece {
 					return;
 				}
 
-				if (x == 2) {
+				if ((x == 2) && (board.getPieceAt(1, y) == null)
+						&& (board.getPieceAt(3, y) == null)) {
 					board.relocatePieceAt(0, y, 3, y);
-				} else {
+				} else if ((x == 6) && (board.getPieceAt(5, y) == null)) {
 					board.relocatePieceAt(7, y, 5, y);
 				}
 			}

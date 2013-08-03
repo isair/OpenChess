@@ -78,8 +78,6 @@ public class BoardController extends ActorGestureListener {
 		this.board.relocatePieceAt(xOld, yOld, x, y);
 		this.board.selectedPiece.moved();
 
-		// TODO: Special move checks. (En passant, etc.)
-
 		/* Deselect and advance round. */
 		this.board.selectedPiece = null;
 		this.board.round++;
