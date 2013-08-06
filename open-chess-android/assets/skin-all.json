@@ -5,11 +5,15 @@
 	},
 	com.badlogic.gdx.graphics.Color: {
 		normal : { hex: "DDDDDD" },
-		bright : { hex: "FFFFFF" }
+		bright : { hex: "FFFFFF" },
+		black : { hex: "000000" }
 	},
 	com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
 		default: { font: normal, fontColor: normal },
 		normal: { font: normal, fontColor: normal },
 		title: { font: title, fontColor: bright }
+	},
+	com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
+		default: { up: button, down: button-down, font: normal, fontColor: black }
 	}
 }

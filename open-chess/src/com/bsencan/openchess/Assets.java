@@ -36,7 +36,7 @@ public class Assets {
 	 * Loads all assets required by {@link MainMenuScreen}.
 	 */
 	public static void loadMainMenu() {
-		skin = new Skin(Gdx.files.internal("skin.json"));
+		skin = new Skin(Gdx.files.internal("skin-labels.json"));
 		menuMusic = Gdx.audio
 				.newMusic(Gdx.files.internal("music/fortress.ogg"));
 	}
@@ -55,6 +55,7 @@ public class Assets {
 	public static void loadGame() {
 		gameAtlas = new TextureAtlas(
 				Gdx.files.internal("atlases/open-chess-atlas.atlas"));
+		skin = new Skin(Gdx.files.internal("skin-all.json"), gameAtlas);
 	}
 
 	/**

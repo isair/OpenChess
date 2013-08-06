@@ -5,112 +5,128 @@ filter: Nearest,Nearest
 repeat: none
 black-bishop
   rotate: false
-  xy: 1, 133
+  xy: 71, 141
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 black-king
   rotate: false
-  xy: 1, 67
+  xy: 1, 1
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 black-knight
   rotate: false
-  xy: 67, 133
+  xy: 71, 75
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 black-pawn
   rotate: false
-  xy: 1, 1
+  xy: 137, 141
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 black-queen
   rotate: false
-  xy: 67, 67
+  xy: 137, 75
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 black-rook
   rotate: false
-  xy: 133, 133
+  xy: 203, 141
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
+button
+  rotate: false
+  xy: 1, 67
+  size: 68, 68
+  split: 4, 4, 4, 4
+  orig: 68, 68
+  offset: 0, 0
+  index: -1
+button-down
+  rotate: false
+  xy: 1, 137
+  size: 68, 68
+  split: 7, 7, 7, 7
+  orig: 68, 68
+  offset: 0, 0
+  index: -1
 tile-1
   rotate: false
-  xy: 133, 67
+  xy: 269, 141
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 tile-1-highlighted
   rotate: false
-  xy: 67, 1
+  xy: 203, 75
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 tile-2
   rotate: false
-  xy: 133, 1
+  xy: 335, 141
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 tile-2-highlighted
   rotate: false
-  xy: 199, 133
+  xy: 269, 75
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 white-bishop
   rotate: false
-  xy: 199, 67
+  xy: 335, 75
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 white-king
   rotate: false
-  xy: 265, 133
+  xy: 401, 141
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 white-knight
   rotate: false
-  xy: 199, 1
+  xy: 401, 75
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 white-pawn
   rotate: false
-  xy: 265, 67
+  xy: 71, 9
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 white-queen
   rotate: false
-  xy: 331, 133
+  xy: 137, 9
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 white-rook
   rotate: false
-  xy: 265, 1
+  xy: 203, 9
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
