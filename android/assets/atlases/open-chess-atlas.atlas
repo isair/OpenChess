@@ -1,0 +1,134 @@
+
+open-chess-atlas.png
+size: 466,206
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+black-bishop
+  rotate: false
+  xy: 72, 142
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+black-king
+  rotate: false
+  xy: 2, 2
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+black-knight
+  rotate: false
+  xy: 72, 76
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+black-pawn
+  rotate: false
+  xy: 138, 142
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+black-queen
+  rotate: false
+  xy: 138, 76
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+black-rook
+  rotate: false
+  xy: 204, 142
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+button
+  rotate: false
+  xy: 2, 68
+  size: 68, 68
+  split: 4, 4, 4, 4
+  orig: 68, 68
+  offset: 0, 0
+  index: -1
+button-down
+  rotate: false
+  xy: 2, 138
+  size: 68, 68
+  split: 7, 7, 7, 7
+  orig: 68, 68
+  offset: 0, 0
+  index: -1
+tile-1
+  rotate: false
+  xy: 204, 76
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+tile-1-highlighted
+  rotate: false
+  xy: 270, 76
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+tile-2
+  rotate: false
+  xy: 270, 142
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+tile-2-highlighted
+  rotate: false
+  xy: 336, 142
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+white-bishop
+  rotate: false
+  xy: 336, 76
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+white-king
+  rotate: false
+  xy: 402, 142
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+white-knight
+  rotate: false
+  xy: 402, 76
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+white-pawn
+  rotate: false
+  xy: 72, 10
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+white-queen
+  rotate: false
+  xy: 138, 10
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+white-rook
+  rotate: false
+  xy: 204, 10
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
